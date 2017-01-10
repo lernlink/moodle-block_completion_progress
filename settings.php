@@ -66,6 +66,13 @@ if ($ADMIN->fulltree) {
         null )
     );
 
+    $settings->add(new admin_setting_configcolourpicker('block_completion_progress/completed_colour_ciab',
+        get_string('completed_colour_title_ciab', 'block_completion_progress'),
+        get_string('completed_colour_descr_ciab', 'block_completion_progress'),
+        get_string('completed_colour_ciab', 'block_completion_progress'),
+        null )
+    );
+
     $settings->add(new admin_setting_configcolourpicker('block_completion_progress/submittednotcomplete_colour',
         get_string('submittednotcomplete_colour_title', 'block_completion_progress'),
         get_string('submittednotcomplete_colour_descr', 'block_completion_progress'),
@@ -84,6 +91,13 @@ if ($ADMIN->fulltree) {
         get_string('futureNotCompleted_colour_title', 'block_completion_progress'),
         get_string('futureNotCompleted_colour_descr', 'block_completion_progress'),
         get_string('futureNotCompleted_colour', 'block_completion_progress'),
+        null )
+    );
+
+    $settings->add(new admin_setting_configcolourpicker('block_completion_progress/futureNotCompleted_colour_ciab',
+        get_string('futureNotCompleted_colour_title_ciab', 'block_completion_progress'),
+        get_string('futureNotCompleted_colour_descr_ciab', 'block_completion_progress'),
+        get_string('futureNotCompleted_colour_ciab', 'block_completion_progress'),
         null )
     );
 

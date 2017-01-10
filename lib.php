@@ -352,13 +352,14 @@ function block_completion_progress_bar($activities, $completions, $config, $user
         'completed_colour' => 'completed_colour',
         'submittednotcomplete_colour' => 'submittednotcomplete_colour',
         'notCompleted_colour' => 'notCompleted_colour',
-        'futureNotCompleted_colour' => 'futureNotCompleted_colour'
+        'futureNotCompleted_colour' => 'futureNotCompleted_colour',
+        'completed_colour_ciab' => 'completed_colour_ciab',
+        'futureNotCompleted_colour_ciab' => 'futureNotCompleted_colour_ciab'
     );
     $colours = array();
     foreach ($colournames as $name => $stringkey) {
         $colours[$name] = get_config('block_completion_progress', $name) ?: get_string('block_completion_progress', $stringkey);
     }
-
     // Get relevant block instance settings or use defaults.
     $useicons = isset($config->progressBarIcons) ? $config->progressBarIcons : DEFAULT_COMPLETIONPROGRESS_PROGRESSBARICONS;
     $orderby = isset($config->orderby) ? $config->orderby : DEFAULT_COMPLETIONPROGRESS_ORDERBY;
@@ -457,7 +458,11 @@ function block_completion_progress_bar($activities, $completions, $config, $user
             $cellcontent = $OUTPUT->pix_icon('blank', '', 'block_completion_progress');
 
         } else if ($complete == COMPLETION_COMPLETE || $complete == COMPLETION_COMPLETE_PASS) {
-            $celloptions['style'] .= $colours['completed_colour'].';';
+            if ($activity['type'] == 'ciabsession') {
+                $celloptions['style'] .= $colours['completed_colour_ciab'].';';
+            } else {
+                $celloptions['style'] .= $colours['completed_colour'].';';
+            }
             $cellcontent = $OUTPUT->pix_icon($useicons == 1 ? 'tick' : 'blank', '', 'block_completion_progress');
 
         } else if (
@@ -469,7 +474,11 @@ function block_completion_progress_bar($activities, $completions, $config, $user
             $cellcontent = $OUTPUT->pix_icon($useicons == 1 ? 'cross' : 'blank', '', 'block_completion_progress');
 
         } else {
-            $celloptions['style'] .= $colours['futureNotCompleted_colour'].';';
+            if ($activity['type'] == 'ciabsession') {
+                $celloptions['style'] .= $colours['futureNotCompleted_colour_ciab'].';';
+            } else {
+                $celloptions['style'] .= $colours['futureNotCompleted_colour'].';';
+            }
             $cellcontent = $OUTPUT->pix_icon('blank', '', 'block_completion_progress');
         }
         if (!empty($activity['available']) || $simple) {

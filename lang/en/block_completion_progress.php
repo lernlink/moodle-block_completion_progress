@@ -23,8 +23,11 @@
  */
 
 $string['completed_colour'] = '#73A839';
+$string['completed_colour_ciab'] = '#00cc00';
+$string['completed_colour_descr_ciab'] = 'HTML Colour code for elements that have been completed (CiaB Sessions)';
 $string['completed_colour_descr'] = 'HTML Colour code for elements that have been completed';
 $string['completed_colour_title'] = 'Completed colour';
+$string['completed_colour_title_ciab'] = 'Completed colour (CiaB Sessions)';
 $string['completion_not_enabled'] = 'Completion tracking is not enabled on this site.';
 $string['completion_not_enabled_course'] = 'Completion tracking is not enabled in this course.';
 $string['completion_progress:addinstance'] = 'Add a new Completion Progress block';
@@ -52,8 +55,11 @@ $string['coursenametoshow'] = 'Course name to show on Dashboard';
 $string['defaultlongbars'] = 'Default presentation for long bars';
 $string['fullname'] = 'Full course name';
 $string['futureNotCompleted_colour'] = '#025187';
+$string['futureNotCompleted_colour_ciab'] = '#3333ff';
 $string['futureNotCompleted_colour_descr'] = 'HTML colour code for future elements that have not yet been completed';
+$string['futureNotCompleted_colour_descr_ciab'] = 'HTML colour code for future elements that have not yet been completed (CiaB Sessions)';
 $string['futureNotCompleted_colour_title'] = 'Future not-completed colour';
+$string['futureNotCompleted_colour_title_ciab'] = 'Future not-completed colour (CiaB Sessions)';
 $string['how_activitiesincluded_works'] = 'How including activities works';
 $string['how_activitiesincluded_works_help'] = '<p>By default, all activities with Activity completion settings set are included in the bar.</p><p>You can also manually select activities to be included.</p>';
 $string['how_group_works'] = 'How visible group works';
