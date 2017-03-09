@@ -36,6 +36,7 @@ const DEFAULT_COMPLETIONPROGRESS_PROGRESSBARICONS = 0;
 const DEFAULT_COMPLETIONPROGRESS_ORDERBY = 'orderbytime';
 const DEFAULT_COMPLETIONPROGRESS_SHOWPERCENTAGE = 0;
 const DEFAULT_COMPLETIONPROGRESS_ACTIVITIESINCLUDED = 'activitycompletion';
+const DEFAULT_COMPLETIONPROGRESS_SHOWCHART = 0;
 
 /**
  * Finds submissions for a user in a course
@@ -324,6 +325,72 @@ function block_completion_progress_completions($activities, $userid, $course, $s
     }
 
     return $completions;
+}
+
+function block_completion_progress_chart() {
+    global $OUTPUT, $COURSE, $CFG, $PAGE;
+    $jsurl = new moodle_url('/blocks/completion_progress/chart.js');
+    $PAGE->requires->js($jsurl);
+    $output = '';
+    $CFG->chart_colorset = ['#a4cf49', '#00aee0'];
+    $modinfo = get_fast_modinfo($COURSE);
+    $completioninfo = new \completion_info($COURSE);
+    $completionvalue = get_completion_value($completioninfo, $modinfo);
+    $chart = new \core\chart_pie();
+    $chart->set_doughnut(true); // Calling set_doughnut(true) we display the chart as a doughnut.
+    $series = new \core\chart_series('Completion', [$completionvalue, (100 - $completionvalue)]);
+    $chart->add_series($series);
+    $output .= html_writer::start_tag('div', ['style' => 'width: 100%;']);
+    $output .=  $OUTPUT->render($chart);
+    $output .= html_writer::end_div();
+    return $output;
+}
+
+function get_completion_value($completioninfo, $modinfo) {
+   global $USER;
+   $sections = $modinfo->get_sections();
+   $activities = [];
+   foreach($modinfo->instances as $module => $instances) {
+       $modulename = get_string('pluginname', $module);
+       foreach($instances as $index => $cm) {
+           if ($cm->completion != COMPLETION_TRACKING_NONE) {
+               $activity = new stdClass;
+               $activity->type = $module;
+               $activity->modulename = $modulename;
+               $activity->id = $cm->id;
+               $activity->instance = $cm->instance;
+               $activity->name = $cm->name;
+               $activity->sectionnum = $cm->sectionnum;
+               $activity->completion = $completioninfo->get_data($cm, true, $USER->id);
+               $activity->completion = $activity->completion->completionstate;
+               switch ($activity->completion) {
+                   case COMPLETION_COMPLETE:
+                     $activity->completion = 'completed';
+                     break;
+                   case COMPLETION_COMPLETE_FAIL:
+                     $activity->completion = 'failed';
+                     break;
+                   default:
+                     $activity->completion = 'not_complete';
+                     break;
+
+               }
+               array_push($activities, $activity);
+           }
+
+       }
+   }
+   $completecount = 0;
+
+       foreach ($activities as $activity) {
+           if ($activity->completion == 'completed') {
+               $completecount++;
+           }
+       }
+
+       $progressvalue = $completecount == 0 ? 0 : $completecount / count($activities);
+
+       return (int)round($progressvalue * 100);
 }
 
 /**

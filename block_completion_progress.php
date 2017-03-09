@@ -195,12 +195,6 @@ class block_completion_progress extends block_base {
                         $submissions = block_completion_progress_student_submissions($course->id, $USER->id);
                         $completions = block_completion_progress_completions($blockinstance->activities, $USER->id, $course,
                             $submissions);
-                        $this->content->text .= block_completion_progress_bar($blockinstance->activities,
-                                                                    $completions,
-                                                                    $blockinstance->config,
-                                                                    $USER->id,
-                                                                    $course->id,
-                                                                    $blockinstance->id);
                     }
                 }
             }
@@ -284,6 +278,9 @@ class block_completion_progress extends block_base {
         $arguments = array($blockinstancesonpage, array($USER->id));
         $this->page->requires->js_init_call('M.block_completion_progress.setupScrolling', array(), false, $jsmodule);
         $this->page->requires->js_init_call('M.block_completion_progress.init', $arguments, false, $jsmodule);
+        if ($this->config->showChart == 1) {
+          $this->content->text = block_completion_progress_chart();
+        }
 
         return $this->content;
     }
