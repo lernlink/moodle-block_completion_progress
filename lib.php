@@ -332,7 +332,7 @@ function block_completion_progress_chart() {
     $jsurl = new moodle_url('/blocks/completion_progress/chart.js');
     $PAGE->requires->js($jsurl);
     $output = '';
-    $CFG->chart_colorset = ['#a4cf49', '#00aee0'];
+    $CFG->chart_colorset = ['#a4cf49', '#d2d2d2'];
     $modinfo = get_fast_modinfo($COURSE);
     $completioninfo = new \completion_info($COURSE);
     $completionvalue = get_completion_value($completioninfo, $modinfo);
