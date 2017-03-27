@@ -97,7 +97,7 @@ class block_completion_progress_edit_form extends block_edit_form {
         $mform->addElement('selectyesno', 'config_showChart',
                            get_string('config_showChart', 'block_completion_progress'));
         $mform->setDefault('config_showChart', DEFAULT_COMPLETIONPROGRESS_SHOWCHART);
-        $mform->addHelpButton('config_showChart_help', 'block_completion_progress');
+        $mform->addHelpButton('config_showChart', 'block_completion_progress');
 
         // Allow progress percentage to be turned on for students.
         $mform->addElement('selectyesno', 'config_showpercentage',
